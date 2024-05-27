@@ -140,10 +140,15 @@ if __name__ == '__main__':
     keypair = classic_load_key(config.miner.get("keyfile"))
     url = config.miner.get("url")
     parsed_url = urlparse(url)
-    SIGNAL_TRADE_URL = f'http://{parsed_url.hostname}:{parsed_url.port}/trade'
-    USER_TRADES_URL = f'http://{parsed_url.hostname}:{parsed_url.port}/user_trades'
+    SIGNAL_TRADE_URL = f'http://127.0.0.1:{parsed_url.port}/trade'
+    USER_TRADES_URL = f'http://127.0.0.1:{parsed_url.port}/user_trades'
     logger.info(f"Running IQ 50 module with key {keypair.ss58_address}")
     os.environ["SIGNAL_TRADE_ADDRESS"] = keypair.ss58_address
     os.environ["SIGNAL_TRADE_PUBLIC_KEY"] = keypair.public_key.hex()
     os.environ["SIGNAL_TRADE_PRIVATE_KEY"] = keypair.private_key.hex()
-    main()
+    version = 1
+    while True:
+        main()
+        logger.info(f"Ready to next round, {version} is done")
+        version += 1
+        time.sleep(1200)

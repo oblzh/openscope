@@ -143,4 +143,4 @@ if __name__ == '__main__':
     app = server.get_fastapi_app()
     app.add_api_route("/trade", claude.trade, methods=["POST"])
     app.add_api_route("/user_trades", claude.user_trades, methods=["GET"])
-    uvicorn.run(app, host=parsed_url.hostname, port=parsed_url.port)
+    uvicorn.run(app, host="0.0.0.0", port=parsed_url.port)
