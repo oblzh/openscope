@@ -1,3 +1,4 @@
+import argparse
 import subprocess
 import sys
 import time
@@ -12,10 +13,17 @@ CMD1 = "src/openscope/miner/IQ50.py"
 USERNAME = os.getlogin()
 
 def main():
+    parser = argparse.ArgumentParser(description="Assemble and send trade")
+    parser.add_argument("-config_file", type=str,
+                        default='env/config.ini',
+                        help=f"config file path"
+                        )
+    args = parser.parse_args()
+    config_file = args.config_file
     while True:
         procs = []
         for cmd in [CMD0, CMD1]:
-            script = [f"/Users/{USERNAME}/.pyenv/shims/python", cmd, "-config_file=env/config.ini"]
+            script = [f"/Users/{USERNAME}/.pyenv/shims/python", cmd, f"-config_file={config_file}"]
             # script = [f"/Users/{USERNAME}/.pyenv/shims/python", cmd]
             proc = subprocess.Popen(script, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             procs.append(proc)
